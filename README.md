@@ -1,5 +1,11 @@
 # 💬 Chat App
 
+![Deployed on Render](https://img.shields.io/badge/Deployed%20on-Render-46E3B7?style=for-the-badge&logo=render&logoColor=white)
+![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-47A248?style=for-the-badge&logo=mongodb&logoColor=white)
+![Node.js](https://img.shields.io/badge/Node.js-Express-339933?style=for-the-badge&logo=node.js&logoColor=white)
+![React](https://img.shields.io/badge/React-18-61DAFB?style=for-the-badge&logo=react&logoColor=black)
+![Socket.io](https://img.shields.io/badge/Socket.IO-Real--Time-010101?style=for-the-badge&logo=socket.io&logoColor=white)
+
 A full-stack **real-time chat application** built with the MERN stack and Socket.IO. Users can sign up, log in, update their profile, and exchange messages with other users in real time.
 
 🔗 **Live Demo**: [https://chat-app-1-vj2h.onrender.com](https://chat-app-1-vj2h.onrender.com)
