@@ -9,13 +9,20 @@ import authRoutes from "./routes/auth.route.js";
 import messageRoutes from "./routes/message.route.js";
 import { app, server } from "./lib/socket.js";
 
+import { fileURLToPath } from "url";
+
 dotenv.config();
 
 const PORT = process.env.PORT || 5001;
-const __dirname = path.resolve();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-// ✅ Allow multiple localhost origins
-const allowedOrigins = ["http://localhost:5173", "http://localhost:5174"];
+// ✅ Allow localhost origins and optional custom CLIENT_URL from environment
+const allowedOrigins = [
+  "http://localhost:5173",
+  "http://localhost:5174",
+  process.env.CLIENT_URL,
+].filter(Boolean);
 
 // ✅ Increased payload limit for large requests like profile pictures
 app.use(express.json({ limit: "10mb" }));
@@ -26,7 +33,7 @@ app.use(cookieParser());
 app.use(
   cors({
     origin: function (origin, callback) {
-      if (!origin || allowedOrigins.includes(origin)) {
+      if (!origin || allowedOrigins.includes(origin) || process.env.NODE_ENV === "production") {
         callback(null, true);
       } else {
         callback(new Error("Not allowed by CORS"));
@@ -42,10 +49,11 @@ app.use("/api/messages", messageRoutes);
 
 // ✅ Serve frontend in production
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "../frontend/dist")));
+  const distPath = path.join(__dirname, "../../frontend/dist");
+  app.use(express.static(distPath));
 
   app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "../frontend", "dist", "index.html"));
+    res.sendFile(path.join(distPath, "index.html"));
   });
 }
 
